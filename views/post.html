@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+</head>
+<body>
+    <h1 id="postTitle"></h1>
+    <p id="postContent"></p>
+    <a href="/">Back to Posts</a>
+    <a href="#" id="editLink">Edit Post</a>
+    <form id="deleteForm" method="POST" action="/delete" style="display: inline;">
+        <input type="hidden" name="id" id="deleteId">
+        <button type="submit">Delete Post</button>
+    </form>
+    <script>
+        const postId = window.location.pathname.split('/').pop();
+
+        fetch(`/posts/${postId}`)
+            .then(response => response.json())
+            .then(post => {
+                document.getElementById('postTitle').textContent = post.title;
+                document.getElementById('postContent').textContent = post.content;
+                document.getElementById('editLink').href = `/update.html?id=${post.id}`;
+                document.getElementById('deleteId').value = post.id;
+            });
+    </script>
+</body>
+</html>

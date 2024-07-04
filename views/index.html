@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+    <ul id="posts"></ul>
+    <a href="/create.html">Create New Post</a>
+    <script>
+        fetch('/posts')
+            .then(response => response.json())
+            .then(posts => {
+                const postList = document.getElementById('posts');
+
+                posts.forEach(post => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="/post/${post.id}">${post.title}</a>`;
+                    postList.appendChild(li);
+                });
+            });
+    </script>
+</body>
+</html>
